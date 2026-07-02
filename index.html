@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UPG Steam Profil</title>
+<meta name="google-site-verification" content="GtgPnwX9vurcfk3pjul2yEIXtESvtXZOY9QKsh7YGLA" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #060b14;
+    --surface: #0d1a2a;
+    --card: #111f33;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --gold: #f59e0b;
+    --text: #e2eaf5;
+    --muted: #5a7a99;
+    --border: #1a3050;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* STARS BG */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(0,229,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 60%, rgba(0,229,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.15) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 70%, rgba(124,58,237,0.3) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(6,11,20,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--accent);
+    text-shadow: 0 0 20px rgba(0,229,255,0.5);
+    letter-spacing: 2px;
+  }
+
+  .logo span { color: var(--accent2); }
+
+  .nav-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 90px 20px 70px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.3);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-main {
+    padding: 14px 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 0 30px rgba(0,229,255,0.3);
+    transition: all 0.2s;
+  }
+  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(0,229,255,0.5); }
+
+  .btn-sec {
+    padding: 14px 36px;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+  .btn-sec:hover { background: rgba(0,229,255,0.1); }
+
+  /* PRICE STRIP */
+  .price-strip {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding: 20px;
+    margin-bottom: 60px;
+  }
+
+  .price-item {
+    text-align: center;
+  }
+  .price-item .num {
+    font-family: 'Orbitron', monospace;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--gold);
+    display: block;
+  }
+  .price-item .label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* SECTION */
+  section {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px;
+  }
+
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+  }
+  .section-sub {
+    text-align: center;
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 40px;
+  }
+
+  /* AVATAR GRID */
+  .avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .avatar-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+  .avatar-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0,229,255,0.15);
+  }
+
+  .avatar-img {
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #0d1a2a, #1a3050);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .avatar-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(0,229,255,0.1));
+  }
+
+  .avatar-info {
+    padding: 14px;
+  }
+  .avatar-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .avatar-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .avatar-price .som { color: var(--gold); font-weight: 700; font-size: 1rem; }
+  .avatar-price .usd { color: var(--muted); font-size: 0.85rem; }
+
+  .buy-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: opacity 0.2s;
+  }
+  .buy-btn:hover { opacity: 0.85; }
+
+  /* HOW */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .step:hover { border-color: var(--accent2); }
+
+  .step-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--accent2);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .step h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .step p { color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
+
+  /* CONTACT */
+  .contact-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .contact-box h2 {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .contact-box p { color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+
+  .tg-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 36px;
+    background: #229ed9;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: opacity 0.2s;
+  }
+  .tg-btn:hover { opacity: 0.85; }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* GLOW LINE */
+  .glow-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+    margin: 0 auto;
+    max-width: 600px;
+    opacity: 0.4;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">UPG <span>STEAM</span> PROFIL</div>
+  <a href="#buyurtma" class="nav-link">BUYURTMA BERISH</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🎮 Steam Avatar Do'koni</div>
+  <h1>PRO STEAM<br>AVATARLAR</h1>
+  <p>Maxsus ishlangan gaming avatarlar. O'yin profilingizni yangi darajaga olib chiqing!</p>
+  <div class="hero-btns">
+    <a href="#avatarlar" class="btn-main">AVATARLARNI KO'RISH</a>
+    <a href="#buyurtma" class="btn-sec">BUYURTMA BERISH</a>
+  </div>
+</div>
+
+<!-- PRICE STRIP -->
+<div class="price-strip">
+  <div class="price-item">
+    <span class="num">5,000</span>
+    <span class="label">SO'MDAN BOSHLAB</span>
+  </div>
+  <div class="price-item">
+    <span class="num">1$</span>
+    <span class="label">DOLLAR NARXI</span>
+  </div>
+  <div class="price-item">
+    <span class="num">24H</span>
+    <span class="label">YETKAZIB BERISH</span>
+  </div>
+  <div class="price-item">
+    <span class="num">100%</span>
+    <span class="label">ORIGINAL DIZAYN</span>
+  </div>
+</div>
+
+<div class="glow-line"></div>
+
+<!-- AVATARLAR -->
+<section id="avatarlar">
+  <div class="section-title">AVATARLAR</div>
+  <div class="section-sub">Tayyor avatarlardan tanlang yoki maxsus buyurtma bering</div>
+
+  <div class="avatar-grid">
+
+    <div class="avatar-card">
+      <div class="avatar-img" style="background: linear-gradient(135deg,#0a1628,#1a3a5c)">⚔️</div>
+      <div class="avatar-info">
+        <div class="avatar-name">WARRIOR PRO</div>
+        <div class="avatar-price">
+          <span class="som">5,000 so'm</span>
+          <span class="usd">$1</span>
+        </div>
+        <button class="buy-btn" onclick="order('WARRIOR PRO')">SOTIB OLISH</button>
+      </div>
+    </div>
+
+    <div class="avatar-card">
+      <div class="avatar-img" style="background: linear-gradient(135deg,#0d1a0a,#1a4020)">🐉</div>
+      <div class="avatar-info">
+        <div class="avatar-name">DRAGON KING</div>
+        <div class="avatar-price">
+          <span class="som">5,000 so'm</span>
+          <span class="usd">$1</span>
+        </div>
+        <button class="buy-btn" onclick="order('DRAGON KING')">SOTIB OLISH</button>
+      </div>
+    </div>
+
+    <div class="avatar-card">
+      <div class="avatar-img" style="background: linear-gradient(135deg,#1a0a28,#3a1a5c)">🥷</div>
+      <div class="avatar-info">
+        <div class="avatar-name">SHADOW NINJA</div>
+        <div class="avatar-price">
+          <span class="som">5,000 so'm</span>
+          <span class="usd">$1</span>
+        </div>
+        <button class="buy-btn" onclick="order('SHADOW NINJA')">SOTIB OLISH</button>
+      </div>
+    </div>
+
+    <div class="avatar-card">
+      <div class="avatar-img" style="background: linear-gradient(135deg,#1a1000,#3a2800)">🔥</div>
+      <div class="avatar-info">
+        <div class="avatar-name">FIRE LEGEND</div>
+        <div class="avatar-price">
+          <span class="som">5,000 so'm</span>
+          <span class="usd">$1</span>
+        </div>
+        <button class="buy-btn" onclick="order('FIRE LEGEND')">SOTIB OLISH</button>
+      </div>
+    </div>
+
+    <div class="avatar-card">
+      <div class="avatar-img" style="background: linear-gradient(135deg,#001a1a,#003a3a)">🤖</div>
+      <div class="avatar-info">
+        <div class="avatar-name">CYBER GHOST</div>
+        <div class="avatar-price">
+          <span class="som">5,000 so'm</span>
+          <span class="usd">$1</span>
+        </div>
+        <button class="buy-btn" onclick="order('CYBER GHOST')">SOTIB OLISH</button>
+      </div>
+    </div>
+
+    <div class="avatar-card">
+      <div class="avatar-img" style="background: linear-gradient(135deg,#1a0010,#3a0030)">💀</div>
+      <div class="avatar-info">
+        <div class="avatar-name">DARK REAPER</div>
+        <div class="avatar-price">
+          <span class="som">5,000 so'm</span>
+          <span class="usd">$1</span>
+        </div>
+        <button class="buy-btn" onclick="order('DARK REAPER')">SOTIB OLISH</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- QANDAY ISHLAYDI -->
+<section>
+  <div class="section-title">QANDAY ISHLAYDI?</div>
+  <div class="section-sub">3 ta oddiy qadam</div>
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">01</span>
+      <h3>TANLANG</h3>
+      <p>Avatarlar ichidan yoqqanini tanlang yoki maxsus dizayn buyurtma bering</p>
+    </div>
+    <div class="step">
+      <span class="step-num">02</span>
+      <h3>TO'LANG</h3>
+      <p>5,000 so'm yoki $1 — Humo/UzCard orqali to'lov qiling</p>
+    </div>
+    <div class="step">
+      <span class="step-num">03</span>
+      <h3>OLING</h3>
+      <p>24 soat ichida tayyor avatarni Telegram orqali qabul qiling</p>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- BUYURTMA -->
+<section id="buyurtma">
+  <div class="contact-box">
+    <h2>BUYURTMA BERISH</h2>
+    <p>Telegram orqali bog'laning. Xohlagan avatar turini ayting — 24 soat ichida tayyor bo'ladi!</p>
+    <a href="https://t.me/YOUR_USERNAME" class="tg-btn" target="_blank">
+      ✈️ TELEGRAM ORQALI BUYURTMA
+    </a>
+    <p style="margin-top:16px;font-size:0.85rem;color:var(--muted)">
+      To'lov: Humo / UzCard • Narx: 5,000 so'm / $1
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="font-family:'Orbitron',monospace;color:var(--accent);font-size:1rem;margin-bottom:8px">UPG STEAM PROFIL</div>
+  <p>© 2024 UPG Steam Profil — Barcha huquqlar himoyalangan</p>
+</footer>
+
+<script>
+function order(name) {
+  const tg = 'https://t.me/Xayrullaxon_alixojayev';
+  const msg = `Salom! Men "${name}" avatarini buyurtma bermoqchiman — 5,000 so'm`;
+  window.open(tg + '?text=' + encodeURIComponent(msg), '_blank');
+}
+</script>
+
+</body>
+</html>
